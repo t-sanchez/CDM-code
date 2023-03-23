@@ -9,4 +9,4 @@ def voxel_sizes(xform):
 
 def dir_cosines(xform):
     """Calculates the orientation of the s/q-form matrix of a NIfTI file."""
-    return xform[1:, :-1] / voxel_sizes(xform)
+    return xform[:-1, :-1] / voxel_sizes(xform)
