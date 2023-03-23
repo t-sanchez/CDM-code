@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 import nibabel as nb
-from nifti import voxel_sizes
+from nifti import voxel_sizes, dir_cosines
 
 
 @pytest.mark.parametrize(
@@ -41,3 +41,15 @@ def test_fuzzing(expected_sizes, testnumber, flip_y):
     input_matrix = np.eye(4)
     input_matrix[:-1, :-1] = rotmat * expected_sizes
     assert np.allclose(voxel_sizes(input_matrix), expected_sizes)
+
+
+@pytest.mark.parametrize(
+    "xform,xform_dir",
+    [
+        (np.diag([1.0, 2.0, 3.0, 1.0]), np.eye(3)),
+        (np.diag([2.0, -1.0, 3.0, 1.0]), np.eye(3)),
+    ],
+)
+def test_dir_cosines(xform, xform_dir):
+    diagonal = np.diag([2.0, 3.0, 1.0, 1.0])
+    assert np.allclose(dir_cosines(diagonal), np.eye(3))
