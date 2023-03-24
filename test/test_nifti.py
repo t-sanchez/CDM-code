@@ -47,9 +47,8 @@ def test_fuzzing(expected_sizes, testnumber, flip_y):
     "xform,xform_dir",
     [
         (np.diag([1.0, 2.0, 3.0, 1.0]), np.eye(3)),
-        (np.diag([2.0, -1.0, 3.0, 1.0]), np.eye(3)),
+        (np.diag([2.0, -1.0, 3.0, 1.0]), np.diag([1.0, -1.0, 1.0])),
     ],
 )
 def test_dir_cosines(xform, xform_dir):
-    diagonal = np.diag([2.0, 3.0, 1.0, 1.0])
-    assert np.allclose(dir_cosines(diagonal), np.eye(3))
+    assert np.allclose(dir_cosines(xform), xform_dir)
